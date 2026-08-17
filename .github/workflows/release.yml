@@ -1,0 +1,269 @@
+name: Release multiplataforma
+
+# Genera los instaladores descargables y los publica en una GitHub Release.
+# Se dispara al empujar una etiqueta v* (por ejemplo v1.0.0) o manualmente.
+on:
+  push:
+    tags:
+      - "v*"
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: "Etiqueta de la release (ej. v1.0.0)"
+        required: true
+        default: "v1.0.0"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: release-${{ github.ref }}
+  cancel-in-progress: false
+
+env:
+  TAG_NAME: ${{ github.event_name == 'workflow_dispatch' && inputs.tag || github.ref_name }}
+
+jobs:
+  # ---------------------------------------------------------------------------
+  # Escritorio: Windows (.msi + .exe NSIS), macOS (.dmg universal), Linux (.deb + .AppImage + .rpm)
+  # ---------------------------------------------------------------------------
+  desktop:
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - platform: windows-latest
+            label: Windows
+            args: ""
+          - platform: macos-latest
+            label: macOS (universal)
+            args: "--target universal-apple-darwin"
+          - platform: ubuntu-22.04
+            label: Linux
+            args: ""
+    runs-on: ${{ matrix.platform }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Dependencias del sistema (Linux)
+        if: matrix.platform == 'ubuntu-22.04'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y \
+            libwebkit2gtk-4.1-dev \
+            libappindicator3-dev \
+            librsvg2-dev \
+            patchelf \
+            libgtk-3-dev \
+            build-essential \
+            file
+
+      - name: Rust estable
+        uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: ${{ matrix.platform == 'macos-latest' && 'aarch64-apple-darwin,x86_64-apple-darwin' || '' }}
+
+      - name: Caché de Rust
+        uses: swatinem/rust-cache@v2
+        with:
+          workspaces: "src-tauri -> target"
+          key: ${{ matrix.platform }}
+
+      - name: pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10.14.0
+
+      - name: Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+
+      - name: Instalar dependencias web
+        run: pnpm install --no-frozen-lockfile
+
+      - name: Compilar y publicar instaladores de escritorio
+        uses: tauri-apps/tauri-action@v0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tagName: ${{ env.TAG_NAME }}
+          releaseName: "Mi Aventura con la Guitarra ${{ env.TAG_NAME }}"
+          releaseBody: "Instaladores generados automáticamente. Consulta las notas de la versión más abajo."
+          releaseDraft: false
+          prerelease: false
+          args: ${{ matrix.args }}
+
+  # ---------------------------------------------------------------------------
+  # Android: APK universal (sideload) + AAB (Google Play)
+  # ---------------------------------------------------------------------------
+  android:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "17"
+
+      - name: SDK de Android
+        uses: android-actions/setup-android@v3
+
+      - name: Instalar NDK
+        run: |
+          sdkmanager "ndk;26.1.10909125"
+          echo "NDK_HOME=$ANDROID_SDK_ROOT/ndk/26.1.10909125" >> "$GITHUB_ENV"
+
+      - name: Rust estable con destinos de Android
+        uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: aarch64-linux-android,armv7-linux-androideabi,i686-linux-android,x86_64-linux-android
+
+      - name: Caché de Rust
+        uses: swatinem/rust-cache@v2
+        with:
+          workspaces: "src-tauri -> target"
+          key: android
+
+      - name: pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10.14.0
+
+      - name: Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+
+      - name: Instalar dependencias web
+        run: pnpm install --no-frozen-lockfile
+
+      - name: Inicializar proyecto Android y permisos
+        run: |
+          pnpm tauri android init --ci
+          node scripts/configure-mobile-permissions.mjs
+
+      - name: Preparar keystore de firma
+        id: keystore
+        env:
+          ANDROID_KEYSTORE_BASE64: ${{ secrets.ANDROID_KEYSTORE_BASE64 }}
+          ANDROID_KEY_ALIAS: ${{ secrets.ANDROID_KEY_ALIAS }}
+          ANDROID_KEY_PASSWORD: ${{ secrets.ANDROID_KEY_PASSWORD }}
+          ANDROID_STORE_PASSWORD: ${{ secrets.ANDROID_STORE_PASSWORD }}
+        run: |
+          KS_DIR="$RUNNER_TEMP/keystore"
+          mkdir -p "$KS_DIR"
+          KS_PATH="$KS_DIR/release.jks"
+          if [ -n "$ANDROID_KEYSTORE_BASE64" ]; then
+            echo "Usando keystore persistente de los secrets del repositorio."
+            echo "$ANDROID_KEYSTORE_BASE64" | base64 -d > "$KS_PATH"
+            echo "alias=$ANDROID_KEY_ALIAS" >> "$GITHUB_OUTPUT"
+            echo "storepass=$ANDROID_STORE_PASSWORD" >> "$GITHUB_OUTPUT"
+            echo "keypass=$ANDROID_KEY_PASSWORD" >> "$GITHUB_OUTPUT"
+          else
+            echo "::warning::No hay keystore en secrets. Se genera uno efímero para esta build."
+            echo "::warning::Para poder ACTUALIZAR la app sobre una instalación previa, define el secret ANDROID_KEYSTORE_BASE64 (ver docs/BUILD_MOBILE.md)."
+            keytool -genkeypair -v -keystore "$KS_PATH" \
+              -alias guitarra -keyalg RSA -keysize 2048 -validity 10000 \
+              -storepass guitarraadventure -keypass guitarraadventure \
+              -dname "CN=Mi Aventura con la Guitarra, OU=Educacion, O=Vladimir Acuna, L=Santiago, C=CL"
+            echo "alias=guitarra" >> "$GITHUB_OUTPUT"
+            echo "storepass=guitarraadventure" >> "$GITHUB_OUTPUT"
+            echo "keypass=guitarraadventure" >> "$GITHUB_OUTPUT"
+          fi
+          echo "path=$KS_PATH" >> "$GITHUB_OUTPUT"
+
+      - name: Compilar APK y AAB
+        run: pnpm tauri android build --apk --aab
+
+      - name: Firmar y alinear artefactos
+        id: sign
+        env:
+          KS_PATH: ${{ steps.keystore.outputs.path }}
+          KS_ALIAS: ${{ steps.keystore.outputs.alias }}
+          KS_STOREPASS: ${{ steps.keystore.outputs.storepass }}
+          KS_KEYPASS: ${{ steps.keystore.outputs.keypass }}
+        run: |
+          set -e
+          BUILD_TOOLS="$(ls -d "$ANDROID_SDK_ROOT"/build-tools/* | sort -V | tail -n1)"
+          echo "Usando build-tools en $BUILD_TOOLS"
+          OUT_DIR="release-artifacts"
+          mkdir -p "$OUT_DIR"
+          VERSION="$(node -p "require('./package.json').version")"
+          echo "Versión de la app: $VERSION"
+
+          # APK universal (para instalación directa / sideload)
+          APK_SRC="$(find src-tauri/gen/android -path '*apk*release*' -name '*.apk' | grep -i universal | head -n1 || true)"
+          if [ -z "$APK_SRC" ]; then
+            APK_SRC="$(find src-tauri/gen/android -path '*apk*release*' -name '*.apk' | head -n1)"
+          fi
+          echo "APK encontrado: $APK_SRC"
+          "$BUILD_TOOLS/zipalign" -f -p 4 "$APK_SRC" "$OUT_DIR/aligned.apk"
+          "$BUILD_TOOLS/apksigner" sign \
+            --ks "$KS_PATH" --ks-key-alias "$KS_ALIAS" \
+            --ks-pass pass:"$KS_STOREPASS" --key-pass pass:"$KS_KEYPASS" \
+            --out "$OUT_DIR/MiAventuraConLaGuitarra-${VERSION}.apk" "$OUT_DIR/aligned.apk"
+          "$BUILD_TOOLS/apksigner" verify "$OUT_DIR/MiAventuraConLaGuitarra-${VERSION}.apk"
+          rm -f "$OUT_DIR/aligned.apk"
+
+          # AAB (para publicar en Google Play, requiere firma con keystore persistente)
+          AAB_SRC="$(find src-tauri/gen/android -path '*bundle*release*' -name '*.aab' | head -n1 || true)"
+          if [ -n "$AAB_SRC" ]; then
+            jarsigner -keystore "$KS_PATH" -storepass "$KS_STOREPASS" -keypass "$KS_KEYPASS" \
+              -signedjar "$OUT_DIR/MiAventuraConLaGuitarra-${VERSION}.aab" "$AAB_SRC" "$KS_ALIAS" || \
+              cp "$AAB_SRC" "$OUT_DIR/MiAventuraConLaGuitarra-${VERSION}.aab"
+          fi
+          ls -la "$OUT_DIR"
+
+      - name: Publicar artefactos de Android en la release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ env.TAG_NAME }}
+          name: "Mi Aventura con la Guitarra ${{ env.TAG_NAME }}"
+          files: release-artifacts/*
+          fail_on_unmatched_files: true
+
+  # ---------------------------------------------------------------------------
+  # Cierre: checksums de integridad y notas de la release generadas del CHANGELOG
+  # ---------------------------------------------------------------------------
+  finalize:
+    needs: [desktop, android]
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Descargar los artefactos publicados
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          mkdir -p dist-assets
+          gh release download "${{ env.TAG_NAME }}" --dir dist-assets --skip-existing
+
+      - name: Generar SHA256SUMS.txt
+        working-directory: dist-assets
+        run: |
+          rm -f SHA256SUMS.txt
+          sha256sum * > SHA256SUMS.txt
+          cat SHA256SUMS.txt
+
+      - name: Publicar checksums y notas de la release
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh release upload "${{ env.TAG_NAME }}" dist-assets/SHA256SUMS.txt --clobber
+          node scripts/release-notes.mjs "${{ env.TAG_NAME }}" > notes.md
+          gh release edit "${{ env.TAG_NAME }}" --notes-file notes.md

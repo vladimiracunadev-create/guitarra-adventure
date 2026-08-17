@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 360" role="img" aria-labelledby="t d">
+<title id="t">Pentagrama y clave de Sol</title><desc id="d">Cinco líneas, cuatro espacios y notas ascendentes.</desc>
+<rect width="720" height="360" rx="32" fill="#fff"/>
+<g stroke="#544f66" stroke-width="3">
+<path d="M80 100h570M80 135h570M80 170h570M80 205h570M80 240h570"/>
+</g>
+<text x="105" y="235" font-family="serif" font-size="180" fill="#6d4aff">𝄞</text>
+<g fill="#25223a">
+<ellipse cx="275" cy="240" rx="18" ry="13" transform="rotate(-18 275 240)"/><ellipse cx="350" cy="205" rx="18" ry="13" transform="rotate(-18 350 205)"/><ellipse cx="425" cy="170" rx="18" ry="13" transform="rotate(-18 425 170)"/><ellipse cx="500" cy="135" rx="18" ry="13" transform="rotate(-18 500 135)"/>
+</g>
+<g font-family="Segoe UI, sans-serif" font-size="18" fill="#68637d" font-weight="700">
+<text x="270" y="280">línea</text><text x="340" y="190">espacio</text><text x="360" y="325" text-anchor="middle" font-size="21" fill="#25223a">Las notas suben alternando líneas y espacios</text>
+</g>
+</svg>

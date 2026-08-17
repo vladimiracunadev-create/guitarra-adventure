@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 360" role="img" aria-labelledby="t d">
+<title id="t">Postura saludable para tocar la guitarra sentada</title><desc id="d">Niña sentada en el borde de una silla, de perfil, con los pies apoyados en el suelo, los hombros bajos y la guitarra descansando sobre la pierna.</desc>
+<rect width="720" height="360" rx="32" fill="#effdfb"/>
+
+<g stroke="#a9a5bd" stroke-width="9" stroke-linecap="round">
+<path d="M444 240h126M456 248v84M560 248v84"/>
+</g>
+
+<circle cx="470" cy="86" r="34" fill="#f0bd8f"/>
+<path d="M436 84c2-42 66-50 76-4-18-12-44-15-76 4" fill="#4b2e2d"/>
+
+<g stroke="#3f4961" stroke-width="20" stroke-linecap="round" fill="none">
+<path d="M468 120v112"/>
+<path d="M462 238l-108 16M354 254v78"/>
+<path d="M466 244l-84 24M382 268v66"/>
+</g>
+
+<g transform="rotate(18 330 216) translate(330 216) scale(0.4) translate(-495 -178)">
+  <path d="M352 146c4-34 36-48 72-48s58 24 70 54c6 22 16 22 26 2 18-38 72-42 98-4 18 26 18 70 0 96-26 38-80 34-98-4-10-20-20-20-26 2-12 30-34 54-70 54s-68-14-72-48c-4-20-4-44 0-64z" fill="#e8a24a" stroke="#8a5320" stroke-width="9"/>
+  <circle cx="540" cy="178" r="33" fill="#3b2a22"/>
+  <rect x="576" y="157" width="32" height="42" rx="8" fill="#6d3f20"/>
+  <rect x="112" y="147" width="244" height="62" rx="8" fill="#33251e"/>
+  <rect x="106" y="141" width="10" height="74" rx="4" fill="#f6ddab"/>
+  <path d="M46 128h62v100H46c-14 0-22-12-22-28v-44c0-16 8-28 22-28z" fill="#6d3f20" stroke="#4a2a14" stroke-width="8"/>
+  <g stroke="#f3ece0" stroke-linecap="round" stroke-width="6">
+    <path d="M110 156h486M110 172h486M110 188h486M110 202h486"/>
+  </g>
+</g>
+
+<g stroke="#3f4961" stroke-width="17" stroke-linecap="round" stroke-linejoin="round" fill="none">
+<path d="M470 154l-16 48-88 16"/>
+<path d="M456 146l-104 8-120 24"/>
+</g>
+<circle cx="232" cy="178" r="15" fill="#f0bd8f"/>
+<circle cx="366" cy="218" r="15" fill="#f0bd8f"/>
+
+<g font-family="Segoe UI, sans-serif" font-size="19" font-weight="700" fill="#25223a">
+<text x="516" y="60">Cabeza suave</text><path d="M512 66l-14 14" stroke="#19a99b" stroke-width="3"/>
+<text x="700" y="136" text-anchor="end">Hombros bajos</text><path d="M556 130l-72 16" stroke="#19a99b" stroke-width="3"/>
+<text x="44" y="88">Mano izquierda libre</text><path d="M148 96l62 58" stroke="#6d4aff" stroke-width="3"/>
+<text x="150" y="352">Pies apoyados</text><path d="M292 346l58-14" stroke="#6d4aff" stroke-width="3"/>
+</g>
+
+<rect x="34" y="228" width="230" height="88" rx="18" fill="#fff" stroke="#b9e9e4"/>
+<text x="149" y="258" text-anchor="middle" font-family="Segoe UI, sans-serif" font-size="17" fill="#08786d" font-weight="700">Sin dolor ni presión</text>
+<text x="149" y="282" text-anchor="middle" font-family="Segoe UI, sans-serif" font-size="14" fill="#68637d">La guitarra descansa sobre la pierna;</text>
+<text x="149" y="302" text-anchor="middle" font-family="Segoe UI, sans-serif" font-size="14" fill="#68637d">la espalda no se encorva para mirar.</text>
+</svg>

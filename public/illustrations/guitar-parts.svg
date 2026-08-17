@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 360" role="img" aria-labelledby="t d">
+<title id="t">Partes principales de la guitarra</title><desc id="d">Ilustración educativa con clavijero, cejuela, mástil con trastes, boca y puente.</desc>
+<rect width="720" height="360" rx="32" fill="#f7f4ff"/>
+<path d="M352 146c4-34 36-48 72-48s58 24 70 54c6 22 16 22 26 2 18-38 72-42 98-4 18 26 18 70 0 96-26 38-80 34-98-4-10-20-20-20-26 2-12 30-34 54-70 54s-68-14-72-48c-4-20-4-44 0-64z" fill="#e8a24a" stroke="#8a5320" stroke-width="5"/>
+<circle cx="540" cy="178" r="33" fill="#3b2a22"/>
+<circle cx="540" cy="178" r="39" fill="none" stroke="#8a5320" stroke-width="4"/>
+<rect x="576" y="157" width="32" height="42" rx="8" fill="#6d3f20"/>
+<rect x="112" y="147" width="244" height="62" rx="8" fill="#33251e"/>
+<g stroke="#c9c2b4" stroke-width="3">
+<path d="M148 147v62M180 147v62M209 147v62M235 147v62M258 147v62M279 147v62M298 147v62M315 147v62M331 147v62"/>
+</g>
+<rect x="106" y="141" width="10" height="74" rx="4" fill="#f6ddab"/>
+<path d="M46 128h62v100H46c-14 0-22-12-22-28v-44c0-16 8-28 22-28z" fill="#6d3f20" stroke="#4a2a14" stroke-width="4"/>
+<g fill="#2d2735">
+<circle cx="46" cy="150" r="7"/><circle cx="46" cy="178" r="7"/><circle cx="46" cy="206" r="7"/>
+<circle cx="84" cy="150" r="7"/><circle cx="84" cy="178" r="7"/><circle cx="84" cy="206" r="7"/>
+</g>
+<g stroke="#f3ece0" stroke-linecap="round">
+<path d="M110 152h486" stroke-width="4.5"/>
+<path d="M110 162h486" stroke-width="4"/>
+<path d="M110 172h486" stroke-width="3.4"/>
+<path d="M110 184h486" stroke-width="2.8"/>
+<path d="M110 194h486" stroke-width="2.2"/>
+<path d="M110 204h486" stroke-width="1.8"/>
+</g>
+<g font-family="Segoe UI, sans-serif" font-size="20" fill="#25223a" font-weight="700">
+<text x="24" y="66">Clavijero</text><path d="M60 74l6 50" stroke="#6d4aff" stroke-width="3"/>
+<text x="140" y="66">Cejuela</text><path d="M162 74l-48 62" stroke="#6d4aff" stroke-width="3"/>
+<text x="168" y="306">Mástil y trastes</text><path d="M232 292l8-76" stroke="#19a99b" stroke-width="3"/>
+<text x="490" y="66">Boca</text><path d="M516 74l20 62" stroke="#ff6b8a" stroke-width="3"/>
+<text x="622" y="292">Puente</text><path d="M638 276l-38-72" stroke="#ff6b8a" stroke-width="3"/>
+</g>
+<text x="360" y="342" text-anchor="middle" font-family="Segoe UI, sans-serif" font-size="18" fill="#68637d">Mira, nombra y compara con tu instrumento real.</text>
+</svg>

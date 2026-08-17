@@ -1,0 +1,291 @@
+<!doctype html>
+<html lang="es-CL">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="theme-color" content="#6d4aff" />
+<title>Mi Aventura con la Guitarra · App educativa para aprender guitarra</title>
+<meta name="description" content="App educativa, privada y sin publicidad para aprender guitarra desde los 10 años. 24 lecciones, afinador cromático, metrónomo y práctica guiada. Windows, Android, Linux, macOS y web." />
+<meta property="og:title" content="Mi Aventura con la Guitarra" />
+<meta property="og:description" content="Aprende guitarra paso a paso: 24 lecciones, afinador, metrónomo y práctica guiada. Privada, sin publicidad y multiplataforma." />
+<meta property="og:type" content="website" />
+<link rel="icon" href="guitarra.svg" type="image/svg+xml" />
+<style>
+  :root{
+    --purple:#6d4aff; --purple-dark:#4e2fd3; --purple-soft:#eee9ff;
+    --coral:#ff6b8a; --teal:#19a99b; --yellow:#ffbc5b;
+    --ink:#25223a; --muted:#68637d; --line:#e5e0f0;
+    --bg:#f7f4ff; --card:#ffffff; --shadow:0 18px 45px rgba(69,48,135,.12);
+    --nav:rgba(247,244,255,.82);
+  }
+  @media (prefers-color-scheme: dark){
+    :root{ --ink:#f1eefc; --muted:#b3adcb; --line:#2c2846; --bg:#141126; --card:#1d1936; --purple-soft:#241f45; --shadow:0 18px 50px rgba(0,0,0,.45); --nav:rgba(20,17,38,.8); }
+  }
+  :root[data-theme="light"]{ --ink:#25223a; --muted:#68637d; --line:#e5e0f0; --bg:#f7f4ff; --card:#fff; --purple-soft:#eee9ff; --shadow:0 18px 45px rgba(69,48,135,.12); --nav:rgba(247,244,255,.82); }
+  :root[data-theme="dark"]{ --ink:#f1eefc; --muted:#b3adcb; --line:#2c2846; --bg:#141126; --card:#1d1936; --purple-soft:#241f45; --shadow:0 18px 50px rgba(0,0,0,.45); --nav:rgba(20,17,38,.8); }
+
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    margin:0; color:var(--ink);
+    font-family:Inter,ui-rounded,"Segoe UI",system-ui,-apple-system,sans-serif;
+    background:radial-gradient(circle at 85% -5%, rgba(140,110,255,.20), transparent 42%),
+               radial-gradient(circle at 5% 8%, rgba(255,107,138,.12), transparent 40%),
+               var(--bg);
+    -webkit-font-smoothing:antialiased; line-height:1.6; overflow-x:hidden;
+  }
+  a{color:inherit}
+  .wrap{width:min(1120px, calc(100% - 40px)); margin:0 auto}
+  .eyebrow{font-size:.74rem; letter-spacing:.14em; font-weight:900; text-transform:uppercase; color:var(--purple)}
+
+  /* NAV */
+  nav{position:sticky; top:0; z-index:50; backdrop-filter:blur(16px); background:var(--nav); border-bottom:1px solid var(--line)}
+  nav .wrap{display:flex; align-items:center; justify-content:space-between; padding:12px 0}
+  .brand{display:flex; align-items:center; gap:11px; font-weight:900; text-decoration:none}
+  .brand-mark{width:42px; height:42px; border-radius:13px; display:grid; place-items:center; font-size:1.4rem;
+    background:linear-gradient(135deg,#5636df,#8c6eff); box-shadow:0 8px 20px rgba(109,74,255,.32)}
+  .brand small{display:block; font-weight:600; color:var(--muted); font-size:.72rem}
+  .nav-links{display:flex; align-items:center; gap:8px}
+  .nav-links a.ghost{color:var(--muted); text-decoration:none; font-weight:700; padding:9px 12px; border-radius:11px; font-size:.92rem}
+  .nav-links a.ghost:hover{color:var(--ink); background:var(--purple-soft)}
+  .btn{display:inline-flex; align-items:center; gap:8px; border:0; border-radius:13px; padding:12px 18px; font-weight:900; text-decoration:none; font-size:.95rem; transition:transform .16s ease, box-shadow .16s ease}
+  .btn.primary{color:#fff; background:var(--purple); box-shadow:0 10px 24px rgba(109,74,255,.32)}
+  .btn.primary:hover{transform:translateY(-2px); box-shadow:0 14px 30px rgba(109,74,255,.42)}
+  .btn.soft{background:var(--purple-soft); color:var(--purple-dark)}
+  .btn.soft:hover{transform:translateY(-2px)}
+  @media(max-width:640px){ .nav-links .hide-sm{display:none} }
+
+  /* HERO */
+  header.hero{padding:clamp(48px,8vw,96px) 0 40px}
+  .hero-grid{display:grid; grid-template-columns:1.05fr .95fr; gap:clamp(28px,5vw,64px); align-items:center}
+  .hero h1{font-size:clamp(2.4rem,6vw,4.3rem); line-height:1.03; margin:14px 0 16px; letter-spacing:-.02em}
+  .hero h1 .grad{background:linear-gradient(120deg,#8c6eff,#ff6b8a); -webkit-background-clip:text; background-clip:text; color:transparent}
+  .hero p.lead{font-size:clamp(1.05rem,2.2vw,1.28rem); color:var(--muted); max-width:34ch}
+  .hero .cta{display:flex; flex-wrap:wrap; gap:12px; margin-top:26px}
+  .trust{display:flex; flex-wrap:wrap; gap:8px 18px; margin-top:28px; color:var(--muted); font-weight:700; font-size:.9rem}
+  .trust span{display:inline-flex; align-items:center; gap:7px}
+  @media(max-width:860px){ .hero-grid{grid-template-columns:1fr; text-align:center} .hero p.lead{margin-inline:auto} .hero .cta,.trust{justify-content:center} }
+
+  /* PHONE */
+  .phone{position:relative; width:min(300px,80vw); margin:0 auto; aspect-ratio:390/844;
+    border-radius:44px; padding:12px; background:linear-gradient(160deg,#2a2350,#4a3aa0);
+    box-shadow:0 40px 90px rgba(40,25,110,.4), inset 0 0 0 2px rgba(255,255,255,.08)}
+  .phone::before{content:""; position:absolute; top:20px; left:50%; transform:translateX(-50%); width:120px; height:26px; background:#15122b; border-radius:0 0 16px 16px; z-index:2}
+  .phone img{width:100%; height:100%; object-fit:cover; border-radius:33px; display:block}
+  .float{position:absolute; background:var(--card); border:1px solid var(--line); border-radius:16px; padding:11px 14px; box-shadow:var(--shadow); font-weight:800; font-size:.86rem; display:flex; align-items:center; gap:9px}
+  .float .emoji{font-size:1.3rem}
+  .float.a{top:12%; left:-6%} .float.b{bottom:16%; right:-8%}
+  @media(max-width:860px){ .float.a{left:2%} .float.b{right:2%} }
+
+  /* SECTIONS */
+  section{padding:clamp(44px,7vw,80px) 0}
+  .section-head{text-align:center; max-width:640px; margin:0 auto clamp(28px,5vw,52px)}
+  .section-head h2{font-size:clamp(1.8rem,4vw,2.7rem); margin:10px 0 8px; letter-spacing:-.01em}
+  .section-head p{color:var(--muted); font-size:1.05rem; margin:0}
+
+  .features{display:grid; grid-template-columns:repeat(3,1fr); gap:18px}
+  @media(max-width:860px){ .features{grid-template-columns:1fr 1fr} }
+  @media(max-width:560px){ .features{grid-template-columns:1fr} }
+  .feature{background:var(--card); border:1px solid var(--line); border-radius:22px; padding:24px; box-shadow:var(--shadow)}
+  .feature .ic{width:52px; height:52px; border-radius:15px; display:grid; place-items:center; font-size:1.6rem; margin-bottom:14px}
+  .feature h3{margin:0 0 6px; font-size:1.18rem}
+  .feature p{margin:0; color:var(--muted); font-size:.96rem}
+  .i-purple{background:var(--purple-soft)} .i-coral{background:rgba(255,107,138,.16)} .i-teal{background:rgba(25,169,155,.16)} .i-yellow{background:rgba(255,188,91,.2)}
+
+  /* GALLERY */
+  .gallery{display:grid; grid-auto-flow:column; grid-auto-columns:minmax(220px,1fr); gap:20px; overflow-x:auto; padding:8px 4px 22px; scroll-snap-type:x mandatory}
+  .shot{scroll-snap-align:center}
+  .shot .frame{border-radius:30px; padding:9px; background:linear-gradient(160deg,#2a2350,#4a3aa0); box-shadow:0 24px 55px rgba(40,25,110,.32)}
+  .shot img{width:100%; border-radius:23px; display:block}
+  .shot p{text-align:center; font-weight:800; color:var(--muted); margin:14px 0 0; font-size:.92rem}
+
+  /* DOWNLOADS */
+  .downloads{background:linear-gradient(160deg, rgba(140,110,255,.1), transparent)}
+  .dl-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:16px}
+  @media(max-width:860px){ .dl-grid{grid-template-columns:1fr 1fr} }
+  @media(max-width:480px){ .dl-grid{grid-template-columns:1fr} }
+  .dl{background:var(--card); border:1px solid var(--line); border-radius:20px; padding:22px; text-align:center; box-shadow:var(--shadow); display:flex; flex-direction:column; align-items:center; gap:6px}
+  .dl .os{font-size:2.4rem; margin-bottom:4px}
+  .dl h3{margin:0; font-size:1.15rem}
+  .dl small{color:var(--muted)}
+  .dl .links{display:flex; flex-wrap:wrap; gap:8px; justify-content:center; margin-top:12px}
+  .dl .links a{font-size:.82rem; font-weight:800; text-decoration:none; padding:8px 12px; border-radius:10px; background:var(--purple-soft); color:var(--purple-dark)}
+  .dl .links a:hover{background:var(--purple); color:#fff}
+  .dl .untested{margin-top:10px; font-size:.74rem; font-weight:800; line-height:1.35; color:var(--muted); border-top:1px dashed var(--line); padding-top:8px}
+  .dl .untested a{color:var(--purple); text-decoration:underline}
+  .note{text-align:center; color:var(--muted); margin-top:26px; font-size:.92rem}
+
+  /* PRIVACY */
+  .privacy .wrap{background:var(--card); border:1px solid var(--line); border-radius:28px; padding:clamp(28px,5vw,48px); box-shadow:var(--shadow); display:grid; grid-template-columns:1fr 1fr; gap:30px; align-items:center}
+  @media(max-width:760px){ .privacy .wrap{grid-template-columns:1fr} }
+  .privacy ul{list-style:none; padding:0; margin:16px 0 0; display:grid; gap:12px}
+  .privacy li{display:flex; gap:11px; align-items:flex-start; font-weight:600}
+  .privacy li b{display:block}
+  .check{flex:0 0 auto; width:26px; height:26px; border-radius:8px; background:rgba(25,169,155,.16); color:var(--teal); display:grid; place-items:center; font-weight:900}
+
+  footer{border-top:1px solid var(--line); padding:34px 0; margin-top:20px}
+  footer .wrap{display:flex; flex-wrap:wrap; gap:14px; justify-content:space-between; align-items:center; color:var(--muted); font-size:.9rem}
+  .disclaimer{background:var(--purple-soft); border-radius:18px; padding:16px 20px; color:var(--ink); font-size:.94rem; margin-top:22px; text-align:center}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap">
+    <a class="brand" href="#top">
+      <span class="brand-mark">🎸</span>
+      <span>Mi Aventura con la Guitarra<small>Aprender paso a paso</small></span>
+    </a>
+    <div class="nav-links">
+      <a class="ghost hide-sm" href="#funciones">Funciones</a>
+      <a class="ghost hide-sm" href="#capturas">Capturas</a>
+      <a class="ghost" href="https://github.com/vladimiracunadev-create/guitarra-adventure">GitHub</a>
+      <a class="btn primary" href="#descargar">Descargar</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero" id="top">
+  <div class="wrap hero-grid">
+    <div>
+      <span class="eyebrow">App educativa · 10 años en adelante</span>
+      <h1>Aprende guitarra como <span class="grad">una aventura</span></h1>
+      <p class="lead">24 lecciones, afinador cromático, metrónomo y práctica guiada. Privada, sin publicidad y sin cuentas. Funciona sin conexión.</p>
+      <div class="cta">
+        <a class="btn primary" href="#descargar">⬇️ Descargar gratis</a>
+        <a class="btn soft" href="#capturas">Ver capturas</a>
+      </div>
+      <div class="trust">
+        <span>🔒 Sin cuentas</span>
+        <span>🚫 Sin publicidad</span>
+        <span>📶 Funciona offline</span>
+        <span>💻📱 Multiplataforma</span>
+      </div>
+    </div>
+    <div>
+      <div class="phone">
+        <img src="screenshots/01-inicio.png" alt="Pantalla de inicio de la app con el saludo a la niña, su racha y lecciones completadas" />
+        <div class="float a"><span class="emoji">🔥</span> Racha de 4 días</div>
+        <div class="float b"><span class="emoji">⭐</span> 7 de 24 lecciones</div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<section id="funciones">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">Todo en una sola app</span>
+      <h2>Herramientas reales, en un lenguaje amable</h2>
+      <p>Cada función está pensada para una niña o niño que recién empieza, con seguridad y bienestar primero.</p>
+    </div>
+    <div class="features">
+      <div class="feature"><div class="ic i-purple">🗺️</div><h3>24 lecciones</h3><p>Seis mundos progresivos: cuidado, postura, mano derecha, cuerdas, primera posición, acordes y repertorio inicial.</p></div>
+      <div class="feature"><div class="ic i-coral">🎯</div><h3>Afinador cromático</h3><p>Reconoce cuerdas al aire y notas pisadas, con <strong>once notas de referencia de guitarra real</strong>. El audio se analiza en el momento y nunca se graba.</p></div>
+      <div class="feature"><div class="ic i-teal">🥁</div><h3>Metrónomo y pulso</h3><p>De 40 a 160 BPM, sin deriva, con compases de 2, 3 y 4 tiempos, tap-tempo y un juego de lectura musical.</p></div>
+      <div class="feature"><div class="ic i-yellow">⏱️</div><h3>Práctica guiada</h3><p>Sesiones de 5 a 20 minutos con un temporizador que continúa aunque se bloquee la pantalla.</p></div>
+      <div class="feature"><div class="ic i-purple">🏅</div><h3>Insignias y racha</h3><p>Motivación positiva, sin competir con nadie. Celebra la constancia, no la comparación.</p></div>
+      <div class="feature"><div class="ic i-teal">👨‍👩‍👧</div><h3>Panel familiar</h3><p>Metas, resumen de práctica, gráfico semanal y respaldo, con un PIN opcional contra cambios accidentales.</p></div>
+      <div class="feature"><div class="ic i-coral">🎵</div><h3>Canciones para tocar</h3><p>Melodías de dominio público con guitarra real y un modo «Tocar conmigo» que verifica cada nota con el micrófono.</p></div>
+      <div class="feature"><div class="ic i-purple">🌙</div><h3>Modo oscuro</h3><p>Claro, oscuro o según el sistema. Respeta el movimiento reducido para mayor comodidad.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="capturas">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">Así se ve</span>
+      <h2>Diseñada para manos y ojos de 10 años</h2>
+      <p>Botones grandes, colores vivos, íconos claros y textos cortos. Desliza para ver más.</p>
+    </div>
+    <div class="gallery">
+      <figure class="shot"><div class="frame"><img src="screenshots/01-inicio.png" alt="Inicio" loading="lazy"/></div><p>Inicio</p></figure>
+      <figure class="shot"><div class="frame"><img src="screenshots/02-ruta.png" alt="Ruta de lecciones" loading="lazy"/></div><p>Ruta de 24 lecciones</p></figure>
+      <figure class="shot"><div class="frame"><img src="screenshots/07-leccion.png" alt="Una lección abierta" loading="lazy"/></div><p>Lección con guía visual</p></figure>
+      <figure class="shot"><div class="frame"><img src="screenshots/03-afinador.png" alt="Afinador" loading="lazy"/></div><p>Afinador cromático</p></figure>
+      <figure class="shot"><div class="frame"><img src="screenshots/08-canciones.png" alt="Canciones" loading="lazy"/></div><p>Canciones con guitarra real</p></figure>
+      <figure class="shot"><div class="frame"><img src="screenshots/dark-inicio.png" alt="Modo oscuro" loading="lazy"/></div><p>Modo oscuro</p></figure>
+      <figure class="shot"><div class="frame"><img src="screenshots/04-ritmo.png" alt="Metrónomo" loading="lazy"/></div><p>Metrónomo y pulso</p></figure>
+      <figure class="shot"><div class="frame"><img src="screenshots/05-practica.png" alt="Práctica" loading="lazy"/></div><p>Sesión de práctica</p></figure>
+      <figure class="shot"><div class="frame"><img src="screenshots/06-familia.png" alt="Panel familiar" loading="lazy"/></div><p>Panel familiar</p></figure>
+    </div>
+  </div>
+</section>
+
+<section class="downloads" id="descargar">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">Versión 1.0.0</span>
+      <h2>Descarga para tu dispositivo</h2>
+      <p>Instaladores generados automáticamente en cada versión. Los binarios los compila GitHub Actions; todavía no se han instalado en dispositivos físicos.</p>
+    </div>
+    <div class="dl-grid">
+      <div class="dl">
+        <div class="os">🪟</div><h3>Windows</h3><small>10 y 11</small>
+        <div class="links">
+          <a href="https://github.com/vladimiracunadev-create/guitarra-adventure/releases/latest/download/Mi.Aventura.con.la.Guitarra_1.0.0_x64-setup.exe">.exe</a>
+          <a href="https://github.com/vladimiracunadev-create/guitarra-adventure/releases/latest/download/Mi.Aventura.con.la.Guitarra_1.0.0_x64_en-US.msi">.msi</a>
+        </div>
+      </div>
+      <div class="dl">
+        <div class="os">🤖</div><h3>Android</h3><small>7.0 o superior</small>
+        <div class="links">
+          <a href="https://github.com/vladimiracunadev-create/guitarra-adventure/releases/latest/download/MiAventuraConLaGuitarra-1.0.0.apk">.apk</a>
+        </div>
+        <p class="untested">⚠️ Si ya tienes una versión instalada, debes desinstalarla antes. <a href="https://github.com/vladimiracunadev-create/guitarra-adventure/blob/main/docs/PARENT_GUIDE.md#actualizar-la-aplicaci%C3%B3n-en-android">Exporta tu respaldo primero</a> para no perder el progreso.</p>
+      </div>
+      <div class="dl">
+        <div class="os">🐧</div><h3>Linux</h3><small>x86-64</small>
+        <div class="links">
+          <a href="https://github.com/vladimiracunadev-create/guitarra-adventure/releases/latest/download/Mi.Aventura.con.la.Guitarra_1.0.0_amd64.AppImage">AppImage</a>
+          <a href="https://github.com/vladimiracunadev-create/guitarra-adventure/releases/latest/download/Mi.Aventura.con.la.Guitarra_1.0.0_amd64.deb">.deb</a>
+          <a href="https://github.com/vladimiracunadev-create/guitarra-adventure/releases/latest/download/Mi.Aventura.con.la.Guitarra-1.0.0-1.x86_64.rpm">.rpm</a>
+        </div>
+        <p class="untested">⚠️ Compilado automáticamente, sin probar en Linux.</p>
+      </div>
+      <div class="dl">
+        <div class="os">🍎</div><h3>macOS</h3><small>10.15+ · universal</small>
+        <div class="links">
+          <a href="https://github.com/vladimiracunadev-create/guitarra-adventure/releases/latest/download/Mi.Aventura.con.la.Guitarra_1.0.0_universal.dmg">.dmg</a>
+        </div>
+        <p class="untested">⚠️ Compilado automáticamente, sin probar en macOS.</p>
+      </div>
+    </div>
+    <p class="note">📱 Android: la primera versión pide permitir "instalar apps desconocidas". · 🍎 macOS: al ser una app independiente, ábrela con clic derecho → Abrir la primera vez. · <a href="https://github.com/vladimiracunadev-create/guitarra-adventure/releases">Ver todas las versiones y archivos →</a></p>
+  </div>
+</section>
+
+<section class="privacy">
+  <div class="wrap">
+    <div>
+      <span class="eyebrow">Privacidad por diseño</span>
+      <h2 style="font-size:clamp(1.7rem,4vw,2.5rem); margin:8px 0 0">Pensada para la tranquilidad de la familia</h2>
+      <p style="color:var(--muted)">Sin recopilar datos, porque aprender no debería costar la privacidad de un niño.</p>
+    </div>
+    <ul>
+      <li><span class="check">✓</span><span><b>Sin cuentas ni servidor</b>El nombre y el progreso se guardan solo en el dispositivo.</span></li>
+      <li><span class="check">✓</span><span><b>Sin publicidad ni analítica</b>Nada de rastreo, compras ni distracciones.</span></li>
+      <li><span class="check">✓</span><span><b>Micrófono en tiempo real</b>Se usa solo para el afinador y jamás se graba ni se envía.</span></li>
+      <li><span class="check">✓</span><span><b>Código abierto (MIT)</b>Cualquiera puede revisar cómo funciona.</span></li>
+    </ul>
+  </div>
+</section>
+
+<section style="padding-top:0">
+  <div class="wrap">
+    <div class="disclaimer">
+      🎼 Esta app <b>acompaña</b>, pero no reemplaza a una profesora o profesor de guitarra. La postura, el tamaño del instrumento y la colocación de los dedos siempre necesitan revisión de una persona.
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <span>🎸 Mi Aventura con la Guitarra · Código y contenido bajo licencia MIT</span>
+    <span><a href="https://github.com/vladimiracunadev-create/guitarra-adventure" style="text-decoration:none; font-weight:800; color:var(--purple-dark)">Ver en GitHub →</a></span>
+  </div>
+</footer>
+
+</body>
+</html>

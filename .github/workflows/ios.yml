@@ -1,0 +1,70 @@
+name: Build iOS (manual)
+
+# iOS requiere macOS, Xcode y una cuenta de Apple Developer de pago para firmar.
+# Este flujo es manual. Sin los secrets de firma solo verifica que el proyecto
+# compila; con ellos produce un .ipa instalable.
+#
+# Secrets necesarios para generar un .ipa firmado (Ajustes > Secrets):
+#   APPLE_CERTIFICATE            Certificado de distribución (.p12) en base64
+#   APPLE_CERTIFICATE_PASSWORD   Contraseña del .p12
+#   APPLE_PROVISIONING_PROFILE   Perfil de aprovisionamiento en base64
+#   APPLE_TEAM_ID                Identificador del equipo de Apple Developer
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  ios:
+    runs-on: macos-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Rust con destinos de iOS
+        uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: aarch64-apple-ios,aarch64-apple-ios-sim,x86_64-apple-ios
+
+      - name: pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10.14.0
+
+      - name: Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+
+      - name: Instalar dependencias web
+        run: pnpm install --no-frozen-lockfile
+
+      - name: Inicializar proyecto iOS y permisos
+        run: |
+          pnpm tauri ios init --ci
+          node scripts/configure-mobile-permissions.mjs
+
+      - name: Verificar compilación (sin firma)
+        if: ${{ env.APPLE_TEAM_ID == '' }}
+        env:
+          APPLE_TEAM_ID: ${{ secrets.APPLE_TEAM_ID }}
+        run: |
+          echo "Sin secrets de firma: se compila la librería Rust para validar que el proyecto está sano."
+          cargo build --manifest-path src-tauri/Cargo.toml --target aarch64-apple-ios
+
+      - name: Compilar IPA firmado
+        if: ${{ env.APPLE_TEAM_ID != '' }}
+        env:
+          APPLE_TEAM_ID: ${{ secrets.APPLE_TEAM_ID }}
+        run: pnpm tauri ios build --export-method app-store-connect
+
+      - name: Publicar IPA
+        if: ${{ env.APPLE_TEAM_ID != '' }}
+        env:
+          APPLE_TEAM_ID: ${{ secrets.APPLE_TEAM_ID }}
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: v1.0.0
+          files: src-tauri/gen/apple/build/**/*.ipa

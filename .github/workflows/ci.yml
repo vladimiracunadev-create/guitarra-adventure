@@ -1,0 +1,72 @@
+name: CI
+
+# Verificación rápida de la base web en cada cambio. Las compilaciones pesadas
+# de instaladores se ejecutan aparte en release.yml (solo al etiquetar v*).
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  web-quality:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10.14.0
+
+      - name: Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+
+      - name: Validar repositorio sin dependencias
+        run: |
+          pnpm validate:repo
+          pnpm smoke:domain
+          pnpm test:domain
+
+      - name: Instalar dependencias
+        run: pnpm install --no-frozen-lockfile
+
+      - name: Suite de Vitest
+        run: pnpm test
+
+      - name: Compilar aplicación web
+        run: pnpm build
+
+  e2e:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10.14.0
+
+      - name: Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+
+      - name: Instalar dependencias
+        run: pnpm install --no-frozen-lockfile
+
+      - name: Instalar navegador de Playwright
+        run: pnpm exec playwright install --with-deps chromium
+
+      - name: Pruebas E2E (Playwright)
+        run: pnpm test:e2e

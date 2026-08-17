@@ -1,0 +1,12 @@
+# Normaliza los finales de línea a LF en el repositorio para evitar
+# diferencias entre Windows y los runners Linux/macOS de CI.
+* text=auto eol=lf
+
+# Binarios: sin normalización.
+*.png binary
+*.ico binary
+*.jks binary
+*.keystore binary
+*.mp3 binary
+*.icns binary
+*.svg text eol=lf

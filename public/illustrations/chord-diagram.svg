@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 360" role="img" aria-labelledby="t d">
+<title id="t">Diagrama del acorde de Mi menor</title><desc id="d">Seis cuerdas verticales y cuatro trastes; dos puntos en el segundo traste de la quinta y la cuarta cuerda, y el resto de las cuerdas al aire.</desc>
+<rect width="720" height="360" rx="32" fill="#fff"/>
+<text x="360" y="52" text-anchor="middle" font-family="Segoe UI, sans-serif" font-size="26" font-weight="800" fill="#4e2fd3">Mi menor</text>
+<g stroke="#544f66" stroke-width="3">
+<path d="M280 116v208M324 116v208M368 116v208M412 116v208M456 116v208M500 116v208"/>
+<path d="M280 168h220M280 220h220M280 272h220M280 324h220"/>
+</g>
+<rect x="277" y="108" width="226" height="12" rx="4" fill="#25223a"/>
+<g fill="none" stroke="#19a99b" stroke-width="4">
+<circle cx="280" cy="88" r="11"/><circle cx="412" cy="88" r="11"/><circle cx="456" cy="88" r="11"/><circle cx="500" cy="88" r="11"/>
+</g>
+<g fill="#6d4aff">
+<circle cx="324" cy="194" r="19"/><circle cx="368" cy="194" r="19"/>
+</g>
+<g fill="#fff" font-family="Segoe UI, sans-serif" font-size="20" font-weight="800" text-anchor="middle">
+<text x="324" y="201">2</text><text x="368" y="201">3</text>
+</g>
+<g font-family="Segoe UI, sans-serif" font-size="18" fill="#68637d" font-weight="700" text-anchor="end">
+<text x="262" y="150">traste 1</text><text x="262" y="202">traste 2</text><text x="262" y="254">traste 3</text>
+</g>
+<g font-family="Segoe UI, sans-serif" font-size="17" fill="#25223a" font-weight="700">
+<text x="524" y="94">al aire</text>
+<text x="524" y="200">dedos 2 y 3</text>
+<text x="360" y="352" text-anchor="middle" font-size="19" fill="#68637d">La línea gruesa de arriba es la cejuela; la de la izquierda, la sexta cuerda.</text>
+</g>
+</svg>

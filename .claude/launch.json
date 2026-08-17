@@ -1,0 +1,11 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "guitarra-dev",
+      "runtimeExecutable": "corepack",
+      "runtimeArgs": ["pnpm", "dev"],
+      "port": 1420
+    }
+  ]
+}

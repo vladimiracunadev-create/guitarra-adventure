@@ -1,0 +1,49 @@
+{
+  "name": "guitarra-adventure",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Aplicación educativa para aprender guitarra desde los 10 años, disponible como web, Windows, Android, iOS, Linux y macOS.",
+  "type": "module",
+  "packageManager": "pnpm@10.14.0",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc -b && vite build",
+    "preview": "vite preview",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:e2e": "playwright test",
+    "tauri": "tauri",
+    "desktop:dev": "tauri dev",
+    "desktop:build": "tauri build",
+    "android:init": "tauri android init && node scripts/configure-mobile-permissions.mjs",
+    "android:dev": "tauri android dev",
+    "android:build": "tauri android build",
+    "ios:init": "tauri ios init && node scripts/configure-mobile-permissions.mjs",
+    "ios:dev": "tauri ios dev",
+    "ios:build": "tauri ios build",
+    "mobile:permissions": "node scripts/configure-mobile-permissions.mjs",
+    "check": "pnpm validate:repo && pnpm smoke:domain && pnpm test:domain && pnpm test && pnpm build",
+    "validate:repo": "node scripts/validate-repository.mjs",
+    "smoke:domain": "node --experimental-strip-types scripts/smoke-domain.mjs",
+    "test:domain": "node --experimental-strip-types scripts/test-domain.mjs",
+    "measure:samples": "node scripts/measure-samples.mjs"
+  },
+  "dependencies": {
+    "@tauri-apps/api": "^2.11.1",
+    "react": "^19.2.7",
+    "react-dom": "^19.2.7"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.62.0",
+    "@tauri-apps/cli": "^2.11.2",
+    "@types/react": "^19.2.0",
+    "@types/react-dom": "^19.2.0",
+    "@vitejs/plugin-react": "^6.0.3",
+    "typescript": "^5.9.3",
+    "vite": "^8.1.5",
+    "vitest": "^4.1.10"
+  },
+  "engines": {
+    "node": ">=22.12.0"
+  }
+}

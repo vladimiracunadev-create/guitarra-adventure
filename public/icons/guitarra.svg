@@ -1,0 +1,64 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="Mi Aventura con la Guitarra">
+  <defs>
+    <linearGradient id="fondo" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#7658f7"/>
+      <stop offset="1" stop-color="#4e2fd3"/>
+    </linearGradient>
+    <linearGradient id="madera" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#f7c882"/>
+      <stop offset="1" stop-color="#e89b3c"/>
+    </linearGradient>
+    <!-- La caja se compone igual que en scripts/generate-icons.mjs: se unen los
+         dos bombos y el centro, y se restan dos círculos laterales para tallar
+         la cintura. Así el favicon y el icono de la app son el mismo dibujo. -->
+    <mask id="caja">
+      <ellipse cx="256" cy="394" rx="106" ry="80" fill="#fff"/>
+      <ellipse cx="256" cy="300" rx="84" ry="64" fill="#fff"/>
+      <rect x="172" y="300" width="168" height="94" fill="#fff"/>
+      <circle cx="130" cy="348" r="50" fill="#000"/>
+      <circle cx="382" cy="348" r="50" fill="#000"/>
+    </mask>
+  </defs>
+
+  <rect width="512" height="512" rx="112" fill="url(#fondo)"/>
+
+  <!-- Clavijero y clavijas -->
+  <rect x="220" y="48" width="72" height="76" rx="16" fill="#965214"/>
+  <g fill="#f7c882">
+    <circle cx="234" cy="68" r="8"/><circle cx="234" cy="90" r="8"/><circle cx="234" cy="112" r="8"/>
+    <circle cx="278" cy="68" r="8"/><circle cx="278" cy="90" r="8"/><circle cx="278" cy="112" r="8"/>
+  </g>
+
+  <!-- Mástil -->
+  <rect x="228" y="112" width="56" height="176" rx="10" fill="#965214"/>
+
+  <!-- Caja de resonancia -->
+  <rect width="512" height="512" fill="url(#madera)" mask="url(#caja)"/>
+
+  <!-- Diapasón con trastes -->
+  <rect x="232" y="118" width="48" height="164" rx="8" fill="#34214a"/>
+  <g stroke="#c9c2b4" stroke-width="4">
+    <line x1="232" y1="156" x2="280" y2="156"/>
+    <line x1="232" y1="192" x2="280" y2="192"/>
+    <line x1="232" y1="226" x2="280" y2="226"/>
+    <line x1="232" y1="256" x2="280" y2="256"/>
+  </g>
+  <rect x="228" y="112" width="56" height="10" rx="4" fill="#f6ddab"/>
+
+  <!-- Boca -->
+  <circle cx="256" cy="352" r="36" fill="#34214a"/>
+  <circle cx="256" cy="352" r="43" fill="none" stroke="#965214" stroke-width="7"/>
+
+  <!-- Puente -->
+  <rect x="208" y="412" width="96" height="28" rx="9" fill="#965214"/>
+
+  <!-- Cuerdas -->
+  <g stroke="#fff8eb" stroke-linecap="round">
+    <line x1="236" y1="56" x2="222" y2="424" stroke-width="4"/>
+    <line x1="244" y1="56" x2="238" y2="424" stroke-width="3.4"/>
+    <line x1="252" y1="56" x2="250" y2="424" stroke-width="3"/>
+    <line x1="260" y1="56" x2="262" y2="424" stroke-width="2.6"/>
+    <line x1="268" y1="56" x2="274" y2="424" stroke-width="2.2"/>
+    <line x1="276" y1="56" x2="290" y2="424" stroke-width="2"/>
+  </g>
+</svg>

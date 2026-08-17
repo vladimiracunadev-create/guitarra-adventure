@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 360" role="img" aria-labelledby="t d">
+<title id="t">Forma de la mano izquierda</title><desc id="d">Dedos curvos que pisan junto al traste, pulgar plano detrás del mástil y espacio entre la palma y la madera.</desc>
+<rect width="720" height="360" rx="32" fill="#effdfb"/>
+<rect x="324" y="24" width="74" height="312" rx="16" fill="#33251e"/>
+<g stroke="#c9c2b4" stroke-width="3">
+<path d="M324 96h74M324 168h74M324 240h74"/>
+</g>
+<g stroke="#f3ece0" stroke-linecap="round">
+<path d="M334 24v312" stroke-width="3.6"/><path d="M346 24v312" stroke-width="3"/><path d="M358 24v312" stroke-width="2.6"/>
+<path d="M368 24v312" stroke-width="2.2"/><path d="M378 24v312" stroke-width="1.9"/><path d="M388 24v312" stroke-width="1.6"/>
+</g>
+<path d="M280 276c-38-42-34-109-4-136 16-15 35-11 43 5-7-55 57-63 70-14 8-46 67-37 66 10 17-32 63-12 54 30-12 58-64 123-145 132-35 4-62-6-84-27z" fill="#f0bd8f" stroke="#bc805a" stroke-width="5"/>
+<path d="M317 145c14 29 15 57 5 84M389 132c7 35 3 69-10 98M453 141c-2 34-12 62-28 87" fill="none" stroke="#bc805a" stroke-width="7" stroke-linecap="round"/>
+<ellipse cx="305" cy="220" rx="28" ry="55" fill="#f0bd8f" stroke="#bc805a" stroke-width="5"/>
+<g font-family="Segoe UI, sans-serif" font-size="19" font-weight="700" fill="#25223a">
+<text x="34" y="75">Pulgar plano detrás</text><path d="M198 70l83 132" stroke="#19a99b" stroke-width="3"/>
+<text x="500" y="82">Dedos curvos</text><path d="M494 88l-66 63" stroke="#6d4aff" stroke-width="3"/>
+<text x="34" y="304">Deja un túnel</text><path d="M167 298l155-48" stroke="#ff6b8a" stroke-width="3"/>
+</g>
+</svg>
