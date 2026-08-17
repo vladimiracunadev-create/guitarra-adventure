@@ -8,12 +8,12 @@ const NOTE_NAMES_SCIENTIFIC = ["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", 
  * de abajo, la más aguda.
  */
 export const BASE_GUITAR_STRINGS = [
-  { number: 6, name: "Mi grave", scientific: "E2", midi: 40 },
-  { number: 5, name: "La", scientific: "A2", midi: 45 },
-  { number: 4, name: "Re", scientific: "D3", midi: 50 },
-  { number: 3, name: "Sol", scientific: "G3", midi: 55 },
-  { number: 2, name: "Si", scientific: "B3", midi: 59 },
-  { number: 1, name: "Mi agudo", scientific: "E4", midi: 64 }
+  { number: 6, note: "Mi", name: "Mi grave", scientific: "E2", midi: 40 },
+  { number: 5, note: "La", name: "La", scientific: "A2", midi: 45 },
+  { number: 4, note: "Re", name: "Re", scientific: "D3", midi: 50 },
+  { number: 3, note: "Sol", name: "Sol", scientific: "G3", midi: 55 },
+  { number: 2, note: "Si", name: "Si", scientific: "B3", midi: 59 },
+  { number: 1, note: "Mi", name: "Mi agudo", scientific: "E4", midi: 64 }
 ] as const;
 
 /**
@@ -95,7 +95,9 @@ export function nearestGuitarString(frequency: number, referenceA = 440): Guitar
 
   return {
     frequency,
-    noteName: target.name,
+    // El nombre corto es el que se muestra en grande; «Mi grave» y «Mi agudo»
+    // solo tienen sentido junto al número de cuerda.
+    noteName: target.note,
     stringName: target.name,
     stringNumber: target.number,
     scientific: target.scientific,

@@ -398,7 +398,8 @@ function Tuner({ soundEnabled, microphoneAllowed, calibration, onCalibrationChan
   const [pitch, setPitch] = useState<PitchResult | null>(null);
   const [message, setMessage] = useState("Toca una nota larga y tranquila.");
   const [history, setHistory] = useState<number[]>([]);
-  const [targetMidi, setTargetMidi] = useState<number>(69);
+  // Primera cuerda al aire: la nota más fácil de producir sin pisar nada.
+  const [targetMidi, setTargetMidi] = useState<number>(64);
   const [challengeActive, setChallengeActive] = useState(false);
   const [stableFrames, setStableFrames] = useState(0);
   const [challengeMessage, setChallengeMessage] = useState("Elige una nota y trata de sostenerla afinada.");
@@ -493,7 +494,7 @@ function Tuner({ soundEnabled, microphoneAllowed, calibration, onCalibrationChan
 
   const cents = Math.max(-50, Math.min(50, pitch?.cents ?? 0));
   const status = !pitch ? "Esperando sonido" : Math.abs(pitch.cents) <= 5 ? "¡Centrada!" : pitch.cents < 0 ? "Un poco baja" : "Un poco alta";
-  const target = BEGINNER_NOTES.find((note) => note.midi === targetMidi) ?? BEGINNER_NOTES[5];
+  const target = BEGINNER_NOTES.find((note) => note.midi === targetMidi) ?? BEGINNER_NOTES[8];
   const guitarStrings = getGuitarStrings(calibration);
 
   return (
