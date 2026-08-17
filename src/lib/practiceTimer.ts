@@ -16,7 +16,7 @@ export const defaultPracticeTimer: PracticeTimerState = {
   secondsLeft: 600,
   running: false,
   finished: false,
-  focus: "Sonido y arco"
+  focus: "Sonido y pulsación"
 };
 
 function isRecord(value: unknown): value is Record<string, unknown> {

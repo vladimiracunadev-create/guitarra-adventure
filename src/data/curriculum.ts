@@ -30,7 +30,7 @@ export const lessons: Lesson[] = [
     objective: "Formar una mano derecha redonda y flexible antes de pulsar las cuerdas.", skills: ["Mano derecha", "Motricidad"], visualGuide: "/illustrations/right-hand.svg",
     steps: [
       { title: "Nombres en letras", instruction: "Aprende los nombres clásicos: pulgar p, índice i, medio m y anular a.", durationMinutes: 3, kind: "observe" },
-      { title: "Arco natural", instruction: "Deja caer el brazo y observa la curva que forman los dedos sin esfuerzo. Esa es la forma que se busca.", durationMinutes: 2, kind: "move" },
+      { title: "Curva natural", instruction: "Deja caer el brazo y observa la curva que forman los dedos sin esfuerzo. Esa es la forma que se busca.", durationMinutes: 2, kind: "move" },
       { title: "Pulgar por delante", instruction: "Apoya el pulgar sobre una mesa formando una X con el índice, sin que se escondan uno debajo del otro.", durationMinutes: 2, kind: "move" },
       { title: "Dedos que respiran", instruction: "Abre y cierra ligeramente los dedos manteniendo la curva. Las uñas cortas de la mano izquierda ayudan.", durationMinutes: 3, kind: "play" }
     ],

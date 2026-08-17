@@ -514,7 +514,7 @@ function Tuner({ soundEnabled, microphoneAllowed, calibration, onCalibrationChan
           <article className="card">
             <h2>Notas de referencia</h2><p>La calibración habitual es 440 Hz. No la cambies sin indicación docente.</p>
             <label className="calibration-control"><span>La4 = <strong>{calibration} Hz</strong></span><input aria-label="Calibración de la nota La" type="range" min="432" max="446" step="1" value={calibration} onChange={(event: { target: HTMLInputElement }) => { onCalibrationChange(Number(event.target.value)); if (drone) { stopDrone(); setDrone(false); } }} /></label>
-            <div className="string-buttons">{guitarStrings.map((string) => <button key={string.scientific} onClick={() => soundEnabled && void playGuitarTone(string.frequency)}><strong>{string.number}ª · {string.name}</strong><span>{string.scientific}</span><small>{string.frequency.toFixed(2)} Hz</small></button>)}</div>
+            <div className="string-buttons">{guitarStrings.map((string) => <button key={string.scientific} onClick={() => soundEnabled && void playGuitarTone(string.frequency)} title={`${string.name}, cuerda ${string.number}`}><strong>{string.note}</strong><span>{string.number}ª · {string.scientific}</span><small>{string.frequency.toFixed(2)} Hz</small></button>)}</div>
             <aside className="safety-box">🛡️ Ajustes grandes de clavijas deben realizarlos una persona adulta o profesora.</aside>
           </article>
 
